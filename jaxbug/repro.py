@@ -5,11 +5,7 @@ def has_package(package_name: str):
     try:
         importlib.import_module(package_name)
     except ImportError:
-        importlib.invalidate_caches()
-        try:
-            importlib.import_module(package_name)
-        except ImportError:
-            return False
+        return False
     return True
 
 
