@@ -4,11 +4,11 @@ import importlib
 def has_package(package_name: str):
     try:
         importlib.import_module(package_name)
-    except ModuleNotFoundError:
+    except ImportError:
         importlib.invalidate_caches()
         try:
             importlib.import_module(package_name)
-        except ModuleNotFoundError:
+        except ImportError:
             return False
     return True
 
