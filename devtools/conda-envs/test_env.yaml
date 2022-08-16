@@ -7,6 +7,5 @@ dependencies:
   - pytest
   - pytest-cov
   - codecov
-  - jax ==0.3.14
-  - jaxlib ==0.3.14
-  - openff-utilities
+  - jax
+  - jaxlib
