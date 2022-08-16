@@ -1,7 +1,10 @@
 from openff.utilities import has_package
 
 
-if has_package("jax"):
-    print("maybe this worked")
-else:
-    print("maybe not")
+def get_jax_version() -> str:
+    if has_package("jax"):
+        import jax
+
+        return jax.__version__
+    else:
+        return 0.0

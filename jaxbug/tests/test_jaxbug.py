@@ -1,15 +1,5 @@
-"""
-Unit and regression test for the jaxbug package.
-"""
-
-# Import package, test suite, and other packages as needed
-import sys
-
-import pytest
-
-import jaxbug
+from jaxbug.repro import get_jax_version
 
 
 def test_jaxbug_imported():
-    """Sample test, will always pass so long as import statement worked."""
-    assert "jaxbug" in sys.modules
+    assert get_jax_version() == "0.3.16"
