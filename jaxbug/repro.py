@@ -1,7 +1,7 @@
-import importlib
+from openff.utilities import has_package
 
-importlib.import_module("jax")
 
-from jax import __version__
-
-assert __version__.startswith("0.3")
+if has_package("jax"):
+    print("maybe this worked")
+else:
+    print("maybe not")
