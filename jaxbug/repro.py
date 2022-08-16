@@ -4,8 +4,11 @@ import importlib
 def has_package(package_name: str):
     try:
         importlib.import_module(package_name)
+    except ModuleNotFoundError:
+        return False
     except ImportError:
         return False
+
     return True
 
 
