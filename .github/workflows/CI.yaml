@@ -1,9 +1,6 @@
 name: CI
 
 on:
-  # GitHub has started calling new repo's first branch "main" https://github.com/github/renaming
-  # Existing codes likely still have "master" as the primary branch
-  # Both are tracked here to keep legacy and new codes working
   push:
     branches:
       - "master"
@@ -12,11 +9,6 @@ on:
     branches:
       - "master"
       - "main"
-  schedule:
-    # Nightly tests run on master by default:
-    #   Scheduled workflows run on the latest commit on the default or base branch.
-    #   (from https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule)
-    - cron: "0 0 * * *"
 
 jobs:
   test:
@@ -30,44 +22,19 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    # More info on options: https://github.com/conda-incubator/setup-miniconda
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: mamba-org/provision-with-micromamba@main
       with:
-        python-version: ${{ matrix.python-version }}
         environment-file: devtools/conda-envs/test_env.yaml
-
-        channels: conda-forge,defaults
-
-        activate-environment: test
-        auto-update-conda: false
-        auto-activate-base: false
-        show-channel-urls: true
+        extra-specs: |
+          python=${{ matrix.python-version }}
 
     - name: Install package
-
-      # conda setup requires this special shell
       shell: bash -l {0}
       run: |
         python -m pip install . --no-deps
         conda list
 
-    - name: Conda list
-      shell: bash -l {0}
-      run: |
-        conda list
-
-
     - name: Run tests
-
-      # conda setup requires this special shell
       shell: bash -l {0}
-
       run: |
         pytest -v --cov=jaxbug --cov-report=xml --color=yes jaxbug/tests/
-
-    - name: CodeCov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-${{ matrix.os }}-py${{ matrix.python-version }}
