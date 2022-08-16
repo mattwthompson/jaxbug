@@ -1,3 +1,3 @@
-import jax
+import importlib
 
-print(jax.__version__)
+importlib.import_module("jax")
