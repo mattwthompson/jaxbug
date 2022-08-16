@@ -1,8 +1,5 @@
 """Reproducing a jaxlib crash"""
 
-# Add imports here
-from .repro import *
-
 # Handle versioneer
 from ._version import get_versions
 versions = get_versions()
